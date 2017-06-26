@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="userViewModel"
+            type="com.gigigo.mvvmapp.viewmodel.UserViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:id="@+id/item_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="6dp">
+
+        <ImageView
+            android:id="@+id/imageview_avatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            tools:imageSource="@{userViewModel.avatar}"/>
+
+        <TextView
+            android:id="@+id/textview_firstname"
+            android:text="@{userViewModel.firstName}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="18sp"
+            android:textAllCaps="true" />
+
+    </LinearLayout>
+
+</layout>
