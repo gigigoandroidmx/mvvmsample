@@ -4,8 +4,9 @@ import android.app.Application;
 
 import com.gigigo.kretrofitmanager.CallAdapterFactory;
 import com.gigigo.kretrofitmanager.ServiceClient;
-import com.gigigo.mvvmapp.utils.Connectivity;
-import com.gigigo.mvvmapp.utils.RequestInterceptor;
+import com.gigigo.mvvmapp.utils.network.Connectivity;
+import com.gigigo.mvvmapp.utils.network.RequestInterceptor;
+import com.gigigo.mvvmapp.utils.sharedpreferences.SharedPreferencesManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ihsanbal.logging.Level;
@@ -28,6 +29,9 @@ public class App
     }
 
     private void initialize() {
+        SharedPreferencesManager.init(this)
+                .setSharedPreferencesName(getString(R.string.app_name));
+
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
 
         LoggingInterceptor loggerInterceptor = new LoggingInterceptor.Builder()

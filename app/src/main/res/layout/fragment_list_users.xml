@@ -1,10 +1,12 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
             name="listUsersViewModel"
             type="com.gigigo.mvvmapp.viewmodel.ListUsersViewModel"/>
     </data>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,15 +16,27 @@
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="@{listUsersViewModel.recycleVisibility}"/>
+            android:visibility="@{!listUsersViewModel.isBusy}"
+            app:itemsSource="@{listUsersViewModel.userList}"/>
 
         <ProgressBar
             android:id="@+id/progressview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="@{listUsersViewModel.progressviewVisibility}"/>
+            android:visibility="@{listUsersViewModel.isBusy}"/>
 
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_add_24dp"
+            android:onClick="@{listUsersViewModel::addUser}"/>
     </RelativeLayout>
+
+
 
 </layout>

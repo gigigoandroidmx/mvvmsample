@@ -1,16 +1,21 @@
 package com.gigigo.mvvmapp.viewmodel;
 
 import android.content.Context;
+import android.databinding.BindingAdapter;
 import android.databinding.ObservableInt;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.gigigo.kretrofitmanager.ICall;
 import com.gigigo.kretrofitmanager.ICallbackAdapter;
 import com.gigigo.kretrofitmanager.ResponseState;
 import com.gigigo.kretrofitmanager.ServiceClient;
+import com.gigigo.mvvmapp.R;
 import com.gigigo.mvvmapp.data.IApiService;
 import com.gigigo.mvvmapp.model.ListUsers;
 import com.gigigo.mvvmapp.model.User;
+import com.gigigo.mvvmapp.view.ListUsersAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,18 +26,12 @@ import java.util.List;
 public class ListUsersViewModel
         extends BaseViewModel {
 
-    public ObservableInt recycleVisibility;
-    public ObservableInt progressviewVisibility;
-
     public ListUsersViewModel(Context context) {
         super(context);
-        this.userList = new ArrayList<>();
-        recycleVisibility = new ObservableInt(View.GONE);
-        progressviewVisibility = new ObservableInt(View.GONE);
     }
 
     public void fetchUserList() {
-        progressviewVisibility = new ObservableInt(View.VISIBLE);
+        setIsBusy(true);
         IApiService service = ServiceClient.createService(IApiService.class);
 
         ICall<ListUsers> call = service.getListUsers(0);
@@ -44,9 +43,7 @@ public class ListUsersViewModel
 
             @Override
             public void onSuccess(ListUsers data) {
-                recycleVisibility.set(View.VISIBLE);
-                progressviewVisibility = new ObservableInt(View.GONE);
-
+                setIsBusy(false);
                 setUserList(data.getUserList());
             }
 
@@ -69,13 +66,27 @@ public class ListUsersViewModel
 
     private List<User> userList;
 
-
     public List<User> getUserList() {
         return userList;
     }
 
     public void setUserList(List<User> userList) {
-        this.userList.addAll(userList);
+        this.userList = userList;
         notifyChange();
+    }
+
+    @BindingAdapter("itemsSource")
+    public static void setItemsSource(RecyclerView view, List<User> source) {
+        ListUsersAdapter adapter = (ListUsersAdapter) view.getAdapter();
+        adapter.setItemsSource(source);
+    }
+
+    public void addUser(View view) {
+        new MaterialDialog.Builder(getContext())
+                .title("Agregar usuario")
+                .customView(R.layout.item_add_user, false)
+                .positiveText("aceptar")
+                .negativeText("cancelar")
+                .show();
     }
 }

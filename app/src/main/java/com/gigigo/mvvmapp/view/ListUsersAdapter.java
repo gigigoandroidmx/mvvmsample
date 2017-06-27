@@ -3,12 +3,10 @@ package com.gigigo.mvvmapp.view;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.gigigo.mvvmapp.R;
 import com.gigigo.mvvmapp.databinding.ItemUserBinding;
-import com.gigigo.mvvmapp.model.ListUsers;
 import com.gigigo.mvvmapp.model.User;
 
 import java.util.List;

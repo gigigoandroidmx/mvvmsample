@@ -1,4 +1,4 @@
-package com.gigigo.mvvmapp.utils;
+package com.gigigo.mvvmapp.utils.network;
 
 import com.gigigo.kretrofitmanager.IConnectivity;
 

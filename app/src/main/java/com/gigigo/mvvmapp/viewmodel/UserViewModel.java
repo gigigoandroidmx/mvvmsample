@@ -2,9 +2,12 @@ package com.gigigo.mvvmapp.viewmodel;
 
 import android.content.Context;
 import android.databinding.BindingAdapter;
+import android.view.View;
 import android.widget.ImageView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.gigigo.mvvmapp.R;
 import com.gigigo.mvvmapp.model.User;
 
 /**
@@ -42,5 +45,8 @@ public class UserViewModel
         Glide.with(view.getContext())
                 .load(source)
                 .into(view);
+    }
+
+    public void onItemClick(View view) {
     }
 }

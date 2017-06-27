@@ -2,7 +2,6 @@ package com.gigigo.mvvmapp.view;
 
 
 import android.databinding.DataBindingUtil;
-import android.databinding.Observable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,22 +12,17 @@ import android.view.ViewGroup;
 
 import com.gigigo.mvvmapp.R;
 import com.gigigo.mvvmapp.databinding.FragmentListUsersBinding;
-import com.gigigo.mvvmapp.view.ListUsersAdapter;
 import com.gigigo.mvvmapp.viewmodel.ListUsersViewModel;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ListUsersFragment extends Fragment {
+public class ListUsersFragment
+        extends Fragment {
 
     private FragmentListUsersBinding binding;
     private ListUsersViewModel viewModel;
-
-    public ListUsersFragment() {
-        // Required empty public constructor
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -38,24 +32,6 @@ public class ListUsersFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_list_users, container, false);
         viewModel = new ListUsersViewModel(getContext());
         binding.setListUsersViewModel(viewModel);
-
-        viewModel.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
-            @Override
-            public void onPropertyChanged(final Observable observable, int i) {
-                if(observable instanceof  ListUsersViewModel) {
-
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ListUsersAdapter adapter = (ListUsersAdapter) binding.recyclerview.getAdapter();
-                            ListUsersViewModel vm = (ListUsersViewModel) observable;
-                            adapter.setItemsSource(vm.getUserList());
-                        }
-                    });
-
-                }
-            }
-        });
 
         View root = binding.getRoot();
         initialize();

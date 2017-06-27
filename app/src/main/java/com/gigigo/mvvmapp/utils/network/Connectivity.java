@@ -1,4 +1,4 @@
-package com.gigigo.mvvmapp.utils;
+package com.gigigo.mvvmapp.utils.network;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

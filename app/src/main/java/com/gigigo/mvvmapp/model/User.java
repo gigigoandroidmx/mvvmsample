@@ -8,8 +8,6 @@ import com.google.gson.annotations.SerializedName;
  */
 public class User {
 
-    @SerializedName("id")
-    @Expose
     private Integer id;
     @SerializedName("first_name")
     @Expose
