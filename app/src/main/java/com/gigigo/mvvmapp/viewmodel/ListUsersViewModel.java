@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.gigigo.kretrofitmanager.CallbackAdapter;
 import com.gigigo.kretrofitmanager.ICall;
 import com.gigigo.kretrofitmanager.ICallbackAdapter;
 import com.gigigo.kretrofitmanager.ResponseState;
@@ -35,7 +36,7 @@ public class ListUsersViewModel
         IApiService service = ServiceClient.createService(IApiService.class);
 
         ICall<ListUsers> call = service.getListUsers(0);
-        call.enqueue(new ICallbackAdapter<ListUsers>() {
+        call.enqueue(new CallbackAdapter<ListUsers>() {
             @Override
             public void onDataEmpty() {
 

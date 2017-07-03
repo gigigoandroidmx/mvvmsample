@@ -29,9 +29,6 @@ public class LoginFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false);
         viewModel = new LoginViewModel(getContext());
 
-        viewModel.setEmail("peter@klaven");
-        viewModel.setPassword("cityslicka");
-
         binding.setLoginViewModel(viewModel);
 
         View root = binding.getRoot();
@@ -41,7 +38,8 @@ public class LoginFragment extends Fragment {
 
 
     private void initialize() {
-
+        viewModel.setEmail("peter@klaven");
+        //viewModel.setPassword("cityslicka");
     }
 
 }

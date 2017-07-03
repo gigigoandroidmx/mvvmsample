@@ -41,13 +41,6 @@
                     android:text="@={loginViewModel.password}"/>
             </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:id="@+id/textview_recover_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="?android:attr/borderlessButtonStyle"
-                android:text="Recuperar contraseña"/>
-
             <Button
                 android:id="@+id/button_login"
                 android:layout_width="match_parent"
@@ -55,6 +48,12 @@
                 android:text="entrar"
                 android:onClick="@{loginViewModel::onLogin}"
                 android:enabled="@{!loginViewModel.isBusy}"/>
+
+            <TextView
+                android:id="@+id/textview_recover_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{loginViewModel.error}"/>
 
         </LinearLayout>
 

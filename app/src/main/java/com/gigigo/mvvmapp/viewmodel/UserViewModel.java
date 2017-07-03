@@ -44,6 +44,7 @@ public class UserViewModel
     public static void setImageSource(ImageView view, String source) {
         Glide.with(view.getContext())
                 .load(source)
+                .placeholder(R.drawable.ic_person_24dp)
                 .into(view);
     }
 

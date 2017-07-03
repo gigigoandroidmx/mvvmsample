@@ -6,15 +6,21 @@ import android.databinding.Bindable;
 import android.view.View;
 
 import com.android.databinding.library.baseAdapters.BR;
+import com.gigigo.kretrofitmanager.CallbackAdapter;
 import com.gigigo.kretrofitmanager.ICall;
-import com.gigigo.kretrofitmanager.ICallbackAdapter;
 import com.gigigo.kretrofitmanager.ResponseState;
 import com.gigigo.kretrofitmanager.ServiceClient;
 import com.gigigo.mvvmapp.data.IApiService;
 import com.gigigo.mvvmapp.model.Credentials;
 import com.gigigo.mvvmapp.model.Identity;
+import com.gigigo.mvvmapp.model.LoginError;
 import com.gigigo.mvvmapp.utils.sharedpreferences.SharedPreferencesManager;
 import com.gigigo.mvvmapp.view.MainActivity;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+
+import retrofit2.Response;
 
 /**
  * @author Juan Godínez Vera - 6/26/2017.
@@ -24,6 +30,7 @@ public class LoginViewModel
 
     private String email;
     private String password;
+    private String error;
 
     public LoginViewModel(Context context) {
         super(context);
@@ -63,10 +70,11 @@ public class LoginViewModel
         IApiService service = ServiceClient.createService(IApiService.class);
         ICall<Identity> call = service.login(credentials);
 
-        call.enqueue(new ICallbackAdapter<Identity>() {
+        call.enqueue(new CallbackAdapter<Identity>() {
             @Override
             public void onDataEmpty() {
-
+                setIsBusy(false);
+                setError("Data empty");
             }
 
             @Override
@@ -84,19 +92,43 @@ public class LoginViewModel
 
             @Override
             public void onUnauthorized() {
-
+                setIsBusy(false);
+                setError("Unauthorized");
             }
 
             @Override
             public void onError(Throwable exception) {
-
+                setIsBusy(false);
+                setError(exception.getMessage());
             }
 
             @Override
             public void onDataNotAvailable(ResponseState entryState) {
+                setIsBusy(false);
+                setError(entryState.getMessage());
+            }
 
+            @Override
+            public ResponseState handleErrorResponse(Response<Identity> response) {
+                setIsBusy(false);
+                Gson gson = new Gson();
+                LoginError error = null;
+                try {
+                    error = gson.fromJson(response.errorBody().string(), LoginError.class);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return new ResponseState(error.getError(), response.code());
             }
         });
     }
 
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
 }
